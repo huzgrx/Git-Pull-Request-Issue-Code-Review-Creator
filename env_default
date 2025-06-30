@@ -1,0 +1,11 @@
+TOKEN_A=replace with token for invited user
+TOKEN_B=replace with token for owner
+REPO_OWNER=
+REPO_NAME=
+FORK_OWNER=
+BRANCH_NAME=
+CREATE_ISSUE=true
+ISSUE_TYPE=feature
+ISSUE_TITLE=New Feature Request
+ENABLE_CODE_REVIEW=true
+RANDOM_CHANCE_PERCENTAGE=50
