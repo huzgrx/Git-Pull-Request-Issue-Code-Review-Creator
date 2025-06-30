@@ -1,0 +1,17 @@
+{
+  "name": "pull-merge-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@octokit/rest": "^22.0.0",
+    "dotenv": "^16.5.0",
+    "simple-git": "^3.28.0"
+  }
+}
