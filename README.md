@@ -1,299 +1,252 @@
-# Pull Merge Bot
+# 🤖 Pull Merge Bot
 
-A GitHub bot that automatically creates pull requests from a fork and merges them using two different GitHub accounts. Now with enhanced features including issue creation and automated code review!
+[![Node.js](https://img.shields.io/badge/Node.js-14+-green.svg)](https://nodejs.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-2.0.0-orange.svg)](package.json)
+[![GitHub](https://img.shields.io/badge/GitHub-API-orange.svg)](https://developer.github.com/v3/)
 
-## 🆕 New Features in v2.0.0
+> **Automated GitHub bot that creates pull requests, performs code reviews, and creates issues with configurable random chance. Perfect for increasing GitHub contribution graphs and maintaining repository activity.**
 
-### 📝 Issue Creation
+## ✨ Features
 
-- Automatically create issues with customizable types (bug, feature, enhancement)
-- Configurable issue titles and descriptions
-- Automatic labeling and metadata
+### 🚀 Core Features
 
-### 🔍 Code Review Contribution
+- **Automated PR Creation**: Creates pull requests from specified branches
+- **Smart Code Review**: Performs detailed code analysis with file-by-file review
+- **Issue Management**: Creates issues with customizable types and content
+- **Random Chance System**: Configurable probability for realistic activity patterns
+- **Dual Account Support**: Separate roles for invited user and repository owner
 
-- Automated code review with detailed analysis
-- File-by-file change analysis
-- Smart suggestions and recommendations
-- **Code review by invited account, approval by repo owner**
-- Enhanced PR descriptions and documentation
-- **Review contributions credited to invited account (Account A)**
-- **Random 30% chance for code review (when enabled)**
+### 🎯 Advanced Features
 
-## Setup
+- **Contribution Optimization**: Increases GitHub contribution graphs naturally
+- **File Analysis**: Reviews JavaScript, TypeScript, and Markdown files
+- **Quality Metrics**: Tracks code quality and provides smart suggestions
+- **Separated Roles**: Review comments from invited account, approval from owner
+- **Configurable Activity**: Set custom probability for features (1-100%)
 
-1. Create a `.env` file in the root directory with the following variables:
+## 🎲 Random Chance System
 
-```env
-# GitHub Account A (the one creating the PR)
-TOKEN_A=your_github_token_for_account_a
+The bot uses a **configurable random chance** for realistic activity patterns:
 
-# GitHub Account B (the one merging the PR - should be the owner)
-TOKEN_B=your_github_token_for_account_b
+- **Issue Creation**: Triggers based on `RANDOM_CHANCE_PERCENTAGE` when enabled
+- **Code Review**: Triggers based on `RANDOM_CHANCE_PERCENTAGE` when enabled
+- **Natural Patterns**: Makes activity look organic and human-like
+- **Predictable**: Same PR will have consistent behavior
 
-# Repository details
-REPO_OWNER=your_repository_owner
-REPO_NAME=your_repository_name
+## 🚀 Quick Start
 
-# Fork owner (Account A's username)
-FORK_OWNER=your_fork_owner_username
+### 1. Clone the Repository
 
-# Branch name (optional, defaults to "jonny")
-BRANCH_NAME=your_branch_name
-
-# 🆕 Enhanced Features (optional)
-CREATE_ISSUE=true
-ISSUE_TYPE=enhancement
-ISSUE_TITLE=Automated Issue Creation
-ISSUE_BODY=This issue was created automatically by the pull-merge bot.
-ENABLE_CODE_REVIEW=true
-RANDOM_CHANCE_PERCENTAGE=30
+```bash
+git clone https://github.com/huzgrx/pull-merge-bot.git
+cd pull-merge-bot
 ```
 
-2. Install dependencies:
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-3. Run the bot:
+### 3. Configure Environment
+
+Create a `.env` file:
+
+```env
+# Required Variables
+TOKEN_A=your_github_token_for_account_a
+TOKEN_B=your_github_token_for_account_b
+REPO_OWNER=your_repository_owner
+REPO_NAME=your_repository_name
+FORK_OWNER=your_fork_owner_username
+
+# Optional Variables
+BRANCH_NAME=feature-branch
+CREATE_ISSUE=true
+ENABLE_CODE_REVIEW=true
+RANDOM_CHANCE_PERCENTAGE=30
+```
+
+### 4. Run the Bot
 
 ```bash
-node server.js
+npm start
 ```
 
-## How it works
+## 📋 Requirements
 
-### 🤖 Enhanced Workflow (v2.0.0)
+### GitHub Tokens
 
-1. **Issue Creation** (if enabled + 30% chance): Creates an issue with specified type and details
-2. **Account A** creates a pull request from the specified branch to the `main` branch
-3. **Code Review** (if enabled + 30% chance): Performs automated code review with detailed analysis
-4. **Account A** provides review comments, **Account B** approves the PR
-5. **Account B** (repository owner) automatically merges the pull request
-6. **Post-merge**: Adds detailed merge summary comment
+- **Token A** (invited user): `repo` scope + `issues` scope (if issue creation enabled)
+- **Token B** (repository owner): `repo` scope
 
-### 🎲 Random Chance System
+### Repository Setup
 
-The bot now uses a **configurable random chance** for both issue creation and code review:
+- Account A must be invited as collaborator to the repository
+- Account B must have admin/owner permissions
+- Repository must be accessible by both accounts
 
-- **Issue Creation**: Only triggers based on `RANDOM_CHANCE_PERCENTAGE` when `CREATE_ISSUE=true`
-- **Code Review**: Only triggers based on `RANDOM_CHANCE_PERCENTAGE` when `ENABLE_CODE_REVIEW=true`
-- **Configurable**: Set `RANDOM_CHANCE_PERCENTAGE=50` for 50% chance, `RANDOM_CHANCE_PERCENTAGE=10` for 10% chance
-- **Logging**: Clear console messages show when features are triggered or skipped
-- **Predictable**: Same features will be skipped/triggered for existing PRs
+## 🔧 Configuration
 
-### 📊 Code Review Features
+### Environment Variables
 
-The bot now provides comprehensive code review including:
+#### Required
 
-- **File Analysis**: Reviews each changed file for type and scope
-- **Change Metrics**: Tracks additions, deletions, and total changes
-- **Smart Suggestions**: Provides context-aware recommendations
-- **Documentation Review**: Special handling for README and documentation files
-- **Code Quality Checks**: Identifies large changes and suggests testing
-- **Separated Roles**: Account A reviews, Account B approves
-- **Automatic Approval**: Approves PRs with detailed review comments
+| Variable     | Description                       | Example        |
+| ------------ | --------------------------------- | -------------- |
+| `TOKEN_A`    | GitHub token for invited user     | `ghp_xxxxxxxx` |
+| `TOKEN_B`    | GitHub token for repository owner | `ghp_xxxxxxxx` |
+| `REPO_OWNER` | Repository owner username         | `huzgrx`       |
+| `REPO_NAME`  | Repository name                   | `my-project`   |
+| `FORK_OWNER` | Invited user username             | `invited-user` |
 
-### 📝 Issue Creation Features
+#### Optional
 
-- **Multiple Types**: Support for bug, feature, and enhancement issues
-- **Custom Content**: Configurable titles and descriptions
-- **Automatic Labeling**: Adds relevant labels automatically
-- **Metadata**: Includes creation timestamp and bot information
-- **Random 30% chance for issue creation (when enabled)**
+| Variable                   | Description              | Default                    | Example          |
+| -------------------------- | ------------------------ | -------------------------- | ---------------- |
+| `BRANCH_NAME`              | Branch to work with      | `jonny`                    | `feature-branch` |
+| `CREATE_ISSUE`             | Enable issue creation    | `false`                    | `true`           |
+| `ISSUE_TYPE`               | Issue type               | `enhancement`              | `feature`        |
+| `ISSUE_TITLE`              | Custom issue title       | `Automated Issue Creation` | `Bug Report`     |
+| `ISSUE_BODY`               | Custom issue description | Generic message            | Custom text      |
+| `ENABLE_CODE_REVIEW`       | Enable code review       | `false`                    | `true`           |
+| `RANDOM_CHANCE_PERCENTAGE` | Probability percentage   | `30`                       | `50`             |
 
-## Environment Variables
+## 🎯 Use Cases
 
-### Required:
-
-- `TOKEN_A`: GitHub token for Account A (invited user)
-- `TOKEN_B`: GitHub token for Account B (repository owner)
-- `REPO_OWNER`: Username of the repository owner
-- `REPO_NAME`: Name of the repository
-- `FORK_OWNER`: Username of Account A (invited user)
-
-### Optional:
-
-- `BRANCH_NAME`: Name of the branch to work with (defaults to "jonny")
-
-### 🆕 Enhanced Features (Optional):
-
-- `CREATE_ISSUE`: Enable issue creation (true/false, defaults to false)
-- `ISSUE_TYPE`: Type of issue to create (bug/feature/enhancement, defaults to enhancement)
-- `ISSUE_TITLE`: Custom issue title (defaults to "Automated Issue Creation")
-- `ISSUE_BODY`: Custom issue description (defaults to generic message)
-- `ENABLE_CODE_REVIEW`: Enable automated code review (true/false, defaults to false)
-- `RANDOM_CHANCE_PERCENTAGE`: Probability percentage for features (1-100, defaults to 30)
-
-## Requirements
-
-- Account A must have a fork of the repository
-- Account A must have access to the repository (invited as collaborator)
-- Account B must be the owner of the target repository
-- Both accounts must have appropriate permissions
-
-## Private Repository Setup
-
-Since your repository is private, ensure both tokens have the following permissions:
-
-### Token A (Account creating PR):
-
-- `repo` scope (full control of private repositories)
-- Access to the repository (invited as collaborator)
-- Permission to create pull requests to the original repository
-- Permission to create issues (if issue creation is enabled)
-
-### Token B (Account merging PR):
-
-- `repo` scope (full control of private repositories)
-- Owner or admin access to the target repository
-- Permission to merge pull requests
-- Permission to review and approve PRs (if code review is enabled)
-
-### Additional Steps for Private Repos:
-
-1. **Invite Account A**: Account B (owner) must invite Account A as a collaborator
-2. **Verify access**: Both accounts should be able to see and access the repository
-3. **Enable features**: Set appropriate environment variables for desired features
-
-## 🤖 Bot Capabilities
-
-### Code Review Contribution
-
-The bot significantly increases your code review contribution by:
-
-- **Automated Reviews**: Performs detailed code reviews on every PR (30% chance)
-- **File Analysis**: Analyzes changes in JavaScript, TypeScript, and Markdown files
-- **Smart Comments**: Provides context-aware suggestions and feedback
-- **Quality Metrics**: Tracks code quality and change patterns
-- **Documentation**: Maintains detailed review records
-- **Account Attribution**: All review contributions are credited to the invited account (Account A)
-- **Separated Roles**: Review comments from Account A, approval from Account B
-
-### Issue Management
-
-- **Automated Creation**: Creates issues with proper categorization (30% chance)
-- **Metadata Tracking**: Includes timestamps and bot information
-- **Label Management**: Automatically applies relevant labels
-- **Custom Content**: Supports customizable issue content
-
-## Troubleshooting
-
-If you get permission errors:
-
-- Check that both tokens have the `repo` scope
-- Verify Account A has access to the private repository
-- Ensure Account B has admin/owner permissions on the repository
-- Make sure the repository is properly accessible by Account A
-- For issue creation: Ensure Account A has permission to create issues
-- For code review: Ensure Account B has permission to review and approve PRs
-
-## 🚀 Getting Started with Enhanced Features
-
-### Enable Issue Creation
+### Low Activity (10-20%)
 
 ```env
-CREATE_ISSUE=true
-ISSUE_TYPE=enhancement
-ISSUE_TITLE=My Custom Issue
-ISSUE_BODY=This is a custom issue description
+RANDOM_CHANCE_PERCENTAGE=10
 ```
 
-### Enable Code Review
+Perfect for maintaining minimal activity without being too obvious.
+
+### Balanced Activity (30-40%)
 
 ```env
-ENABLE_CODE_REVIEW=true
+RANDOM_CHANCE_PERCENTAGE=30
 ```
 
-### Full Feature Set
+Default setting for natural, balanced contribution patterns.
+
+### High Activity (50-70%)
 
 ```env
-CREATE_ISSUE=true
-ISSUE_TYPE=feature
-ISSUE_TITLE=New Feature Request
-ISSUE_BODY=Requesting new feature implementation
-ENABLE_CODE_REVIEW=true
-BRANCH_NAME=feature-branch
 RANDOM_CHANCE_PERCENTAGE=50
 ```
 
-## 📈 Contribution Impact
+For more frequent contributions and active repository engagement.
+
+### Maximum Activity (80-100%)
+
+```env
+RANDOM_CHANCE_PERCENTAGE=100
+```
+
+For maximum contribution activity and repository maintenance.
+
+## 📊 How It Works
+
+### 🤖 Enhanced Workflow (v2.0.0)
+
+1. **Issue Creation** (configurable chance): Creates issues with specified details
+2. **PR Creation**: Account A creates pull request from specified branch
+3. **Code Review** (configurable chance): Account A provides detailed review comments
+4. **Approval**: Account B approves the PR (if review was performed)
+5. **Merge**: Account B merges the pull request
+6. **Post-merge**: Account A adds summary comment
+
+### 📈 Contribution Impact
 
 This bot helps increase your GitHub contribution graph by:
 
 1. **Regular Commits**: Automated README updates create regular commit activity
 2. **Pull Requests**: Creates and manages PRs automatically
-3. **Code Reviews**: Performs detailed code reviews (configurable chance, credited to Account A)
-4. **Issue Creation**: Creates issues (configurable chance, counts as issue contributions)
+3. **Code Reviews**: Performs detailed code reviews (credited to Account A)
+4. **Issue Creation**: Creates issues (counts as issue contributions)
 5. **Repository Activity**: Maintains active repository engagement
 
-**Note**: Code review contributions are specifically credited to the invited account (Account A), helping increase that account's GitHub contribution graph and review activity. Both issue creation and code review have a configurable random chance to occur when enabled.
+## 🔍 Code Review Features
+
+- **File Analysis**: Reviews JavaScript, TypeScript, and Markdown files
+- **Change Metrics**: Tracks additions, deletions, and total changes
+- **Smart Suggestions**: Provides context-aware recommendations
+- **Documentation Review**: Special handling for README and documentation files
+- **Code Quality Checks**: Identifies large changes and suggests testing
+- **Separated Roles**: Account A reviews, Account B approves
 
 ## 🎲 Random Chance Examples
 
-### When Code Review is Triggered (configurable chance)
-
-```
-🎲 Random chance triggered: Performing code review...
-🔍 Performing code review on PR #123 by invited-user...
-✅ Code review comment added to PR #123 by invited-user
-✅ PR #123 approved by repo-owner
-✅ Code review completed by invited-user and approved by repo-owner
-```
-
-### When Code Review is Skipped
-
-```
-🎲 Random chance not triggered: Skipping code review
-```
-
-### When Issue Creation is Triggered (configurable chance)
+### When Features Are Triggered
 
 ```
 🎲 Random chance triggered: Creating issue...
-📝 Creating issue...
-✅ Issue created successfully: #456
+🎲 Random chance triggered: Performing code review...
 ```
 
-### When Issue Creation is Skipped
+### When Features Are Skipped
 
 ```
 🎲 Random chance not triggered: Skipping issue creation
+🎲 Random chance not triggered: Skipping code review
 ```
 
-### Different Chance Percentages
+## 🛠️ Troubleshooting
 
-```env
-# 10% chance (rare)
-RANDOM_CHANCE_PERCENTAGE=10
+### Common Issues
 
-# 30% chance (default)
-RANDOM_CHANCE_PERCENTAGE=30
+1. **Missing Environment Variables**
 
-# 50% chance (frequent)
-RANDOM_CHANCE_PERCENTAGE=50
+   ```
+   ❌ Missing required environment variables. Please check your .env file.
+   ```
 
-# 80% chance (very frequent)
-RANDOM_CHANCE_PERCENTAGE=80
+2. **Invalid Token**
 
-# 100% chance (always)
-RANDOM_CHANCE_PERCENTAGE=100
-```
+   ```
+   ❌ Repository access validation failed: Bad credentials
+   ```
 
-## Version History
+3. **Permission Denied**
+   ```
+   ❌ Repository access validation failed: Not Found
+   ```
 
-### v2.0.0 (Current)
+### Solutions
 
-- ✅ Added issue creation functionality
-- ✅ Added automated code review system
-- ✅ Enhanced PR descriptions and documentation
-- ✅ Improved error handling and logging
-- ✅ Added post-merge comments and summaries
+1. **Check your `.env` file** - Ensure all required variables are set
+2. **Verify token permissions** - Make sure tokens have the correct scopes
+3. **Check repository access** - Ensure Account A has been invited to the repository
+4. **Validate usernames** - Double-check REPO_OWNER and FORK_OWNER values
 
-### v1.0.0
+## 🤝 Contributing
 
-- ✅ Basic PR creation and merging
-- ✅ README.md updates
-- ✅ Branch management
-- ✅ Conflict detection and handling
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with [Octokit](https://github.com/octokit/octokit.js) for GitHub API integration
+- Uses [dotenv](https://github.com/motdotla/dotenv) for environment management
+- Inspired by the need for automated repository maintenance
+
+## 📞 Support
+
+If you have any questions or need help, please:
+
+1. Check the [Configuration Guide](CONFIGURATION.md)
+2. Review the [troubleshooting section](#troubleshooting)
+3. Open an [issue](https://github.com/huzgrx/pull-merge-bot/issues)
+
+---
+
+⭐ **If this project helps you, please give it a star!** ⭐

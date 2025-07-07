@@ -59,9 +59,9 @@ RANDOM_CHANCE_PERCENTAGE=30
 ```env
 TOKEN_A=ghp_your_token_a_here
 TOKEN_B=ghp_your_token_b_here
-REPO_OWNER=yourusername
+REPO_OWNER=huzgrx
 REPO_NAME=your-repo
-FORK_OWNER=yourusername
+FORK_OWNER=huzgrx
 BRANCH_NAME=main
 ```
 
@@ -70,9 +70,9 @@ BRANCH_NAME=main
 ```env
 TOKEN_A=ghp_your_token_a_here
 TOKEN_B=ghp_your_token_b_here
-REPO_OWNER=yourusername
+REPO_OWNER=huzgrx
 REPO_NAME=your-repo
-FORK_OWNER=yourusername
+FORK_OWNER=huzgrx
 BRANCH_NAME=feature-branch
 CREATE_ISSUE=true
 ISSUE_TYPE=feature
@@ -85,9 +85,9 @@ ISSUE_BODY=Requesting implementation of new feature
 ```env
 TOKEN_A=ghp_your_token_a_here
 TOKEN_B=ghp_your_token_b_here
-REPO_OWNER=yourusername
+REPO_OWNER=huzgrx
 REPO_NAME=your-repo
-FORK_OWNER=yourusername
+FORK_OWNER=huzgrx
 BRANCH_NAME=main
 ENABLE_CODE_REVIEW=true
 ```
@@ -97,9 +97,9 @@ ENABLE_CODE_REVIEW=true
 ```env
 TOKEN_A=ghp_your_token_a_here
 TOKEN_B=ghp_your_token_b_here
-REPO_OWNER=yourusername
+REPO_OWNER=huzgrx
 REPO_NAME=your-repo
-FORK_OWNER=yourusername
+FORK_OWNER=huzgrx
 BRANCH_NAME=enhancement-branch
 CREATE_ISSUE=true
 ISSUE_TYPE=enhancement
