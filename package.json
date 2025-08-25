@@ -1,6 +1,6 @@
 {
   "name": "pull-merge-bot",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "🤖 Automated GitHub bot that creates pull requests, performs code reviews, and creates issues with configurable random chance. Perfect for increasing GitHub contribution graphs and maintaining repository activity.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
