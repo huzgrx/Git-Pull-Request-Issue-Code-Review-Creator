@@ -1,11 +1,56 @@
-# 🤖 Pull Merge Bot
+# 🤖 Pull-Merge Bot
 
 [![Node.js](https://img.shields.io/badge/Node.js-14+-green.svg)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-2.0.0-orange.svg)](package.json)
 [![GitHub](https://img.shields.io/badge/GitHub-API-orange.svg)](https://developer.github.com/v3/)
+[![npm](https://img.shields.io/badge/npm-package-blue.svg)](https://www.npmjs.com/)
 
 > **Automated GitHub bot that creates pull requests, performs code reviews, and creates issues with configurable random chance. Perfect for increasing GitHub contribution graphs and maintaining repository activity.**
+
+## 🚀 Quick Start
+
+### Install as npm package
+
+```bash
+npm install pull-merge-bot
+```
+
+### Use in your code
+
+```javascript
+const { PullMergeBot } = require("pull-merge-bot");
+
+const bot = new PullMergeBot({
+  tokenA: "your_github_token_a",
+  tokenB: "your_github_token_b",
+  repoOwner: "your_username",
+  repoName: "your-repo",
+  forkOwner: "your_username",
+  createIssue: true,
+  enableCodeReview: true,
+  randomChancePercentage: 30,
+});
+
+// Run the bot
+const success = await bot.run();
+```
+
+### Use as CLI tool
+
+```bash
+# Install globally
+npm install -g pull-merge-bot
+
+# Run with configuration
+pull-merge-bot run
+
+# Show current config
+pull-merge-bot config
+
+# Setup wizard
+pull-merge-bot setup
+```
 
 ## ✨ Features
 
@@ -29,144 +74,245 @@
 
 The bot uses a **configurable random chance** for realistic activity patterns:
 
-- **Issue Creation**: Triggers based on `RANDOM_CHANCE_PERCENTAGE` when enabled
-- **Code Review**: Triggers based on `RANDOM_CHANCE_PERCENTAGE` when enabled
+- **Issue Creation**: Triggers based on `randomChancePercentage` when enabled
+- **Code Review**: Triggers based on `randomChancePercentage` when enabled
 - **Natural Patterns**: Makes activity look organic and human-like
 - **Predictable**: Same PR will have consistent behavior
 
-## 🚀 Quick Start
+## 🛠️ Installation & Usage
 
-### 1. Clone the Repository
+### Method 1: npm package (Recommended)
 
-```bash
-git clone https://github.com/huzgrx/pull-merge-bot.git
-cd pull-merge-bot
-```
-
-### 2. Install Dependencies
+#### Install
 
 ```bash
-npm install
+npm install pull-merge-bot
 ```
 
-### 3. Configure Environment
+#### Basic Usage
+
+```javascript
+const { PullMergeBot } = require("pull-merge-bot");
+
+const bot = new PullMergeBot({
+  tokenA: process.env.TOKEN_A,
+  tokenB: process.env.TOKEN_B,
+  repoOwner: "yourusername",
+  repoName: "your-repo",
+  forkOwner: "yourusername",
+});
+
+// Run the bot
+bot.run().then((success) => {
+  if (success) {
+    console.log("✅ Bot completed successfully!");
+  }
+});
+```
+
+#### Advanced Configuration
+
+```javascript
+const bot = new PullMergeBot({
+  // Required
+  tokenA: "ghp_your_token_a",
+  tokenB: "ghp_your_token_b",
+  repoOwner: "yourusername",
+  repoName: "your-repo",
+  forkOwner: "yourusername",
+
+  // Optional
+  branchName: "feature-branch",
+  createIssue: true,
+  issueType: "enhancement",
+  issueTitle: "Custom Issue Title",
+  issueBody: "Custom issue description",
+  enableCodeReview: true,
+  randomChancePercentage: 50,
+});
+```
+
+### Method 2: CLI Tool
+
+#### Install globally
+
+```bash
+npm install -g pull-merge-bot
+```
+
+#### Run with environment variables
+
+```bash
+# Set environment variables in .env file
+export TOKEN_A=your_token_a
+export TOKEN_B=your_token_b
+export REPO_OWNER=yourusername
+export REPO_NAME=your-repo
+export FORK_OWNER=yourusername
+
+# Run the bot
+pull-merge-bot run
+```
+
+#### Run with command line options
+
+```bash
+pull-merge-bot run \
+  --token-a your_token_a \
+  --token-b your_token_b \
+  --repo-owner yourusername \
+  --repo-name your-repo \
+  --fork-owner yourusername \
+  --create-issue \
+  --enable-code-review \
+  --random-chance 50
+```
+
+#### CLI Commands
+
+```bash
+# Show help
+pull-merge-bot --help
+
+# Show current configuration
+pull-merge-bot config
+
+# Setup wizard
+pull-merge-bot setup
+
+# Run with specific options
+pull-merge-bot run --create-issue --enable-code-review
+```
+
+## 🔧 Configuration
+
+### Configuration Options
+
+| Option                   | Type    | Required | Default                      | Description                          |
+| ------------------------ | ------- | -------- | ---------------------------- | ------------------------------------ |
+| `tokenA`                 | string  | ✅       | -                            | GitHub token for invited user        |
+| `tokenB`                 | string  | ✅       | -                            | GitHub token for repository owner    |
+| `repoOwner`              | string  | ✅       | -                            | Repository owner username            |
+| `repoName`               | string  | ✅       | -                            | Repository name                      |
+| `forkOwner`              | string  | ✅       | -                            | Invited user username                |
+| `branchName`             | string  | ❌       | `"jonny"`                    | Branch to work with                  |
+| `createIssue`            | boolean | ❌       | `false`                      | Enable issue creation                |
+| `issueType`              | string  | ❌       | `"enhancement"`              | Issue type (bug/feature/enhancement) |
+| `issueTitle`             | string  | ❌       | `"Automated Issue Creation"` | Custom issue title                   |
+| `issueBody`              | string  | ❌       | Generic message              | Custom issue description             |
+| `enableCodeReview`       | boolean | ❌       | `false`                      | Enable code review                   |
+| `randomChancePercentage` | number  | ❌       | `30`                         | Probability percentage (1-100)       |
+
+### Environment Variables
 
 Create a `.env` file:
 
 ```env
-# Required Variables
-TOKEN_A=your_github_token_for_account_a
-TOKEN_B=your_github_token_for_account_b
-REPO_OWNER=your_repository_owner
-REPO_NAME=your_repository_name
-FORK_OWNER=your_fork_owner_username
+# Required
+TOKEN_A=your_github_token_a
+TOKEN_B=your_github_token_b
+REPO_OWNER=your_username
+REPO_NAME=your_repo
+FORK_OWNER=your_username
 
-# Optional Variables
+# Optional
 BRANCH_NAME=feature-branch
 CREATE_ISSUE=true
+ISSUE_TYPE=enhancement
 ENABLE_CODE_REVIEW=true
 RANDOM_CHANCE_PERCENTAGE=30
 ```
 
-### 4. Run the Bot
+## 📊 Examples
 
-```bash
-npm start
+### Example 1: Minimal Setup
+
+```javascript
+const { PullMergeBot } = require("pull-merge-bot");
+
+const bot = new PullMergeBot({
+  tokenA: process.env.TOKEN_A,
+  tokenB: process.env.TOKEN_B,
+  repoOwner: "yourusername",
+  repoName: "your-repo",
+  forkOwner: "yourusername",
+});
+
+await bot.run();
 ```
 
-## 📋 Requirements
+### Example 2: Full Features
 
-### GitHub Tokens
+```javascript
+const bot = new PullMergeBot({
+  tokenA: "ghp_your_token_a",
+  tokenB: "ghp_your_token_b",
+  repoOwner: "yourusername",
+  repoName: "your-repo",
+  forkOwner: "yourusername",
+  branchName: "enhancement-branch",
+  createIssue: true,
+  issueType: "feature",
+  issueTitle: "New Feature Request",
+  issueBody: "Requesting new feature implementation",
+  enableCodeReview: true,
+  randomChancePercentage: 50,
+});
 
-- **Token A** (invited user): `repo` scope + `issues` scope (if issue creation enabled)
-- **Token B** (repository owner): `repo` scope
+await bot.run();
+```
 
-### Repository Setup
+### Example 3: Factory Function
 
-- Account A must be invited as collaborator to the repository
-- Account B must have admin/owner permissions
-- Repository must be accessible by both accounts
+```javascript
+const { createBot } = require("pull-merge-bot");
 
-## 🔧 Configuration
+const bot = createBot({
+  tokenA: process.env.TOKEN_A,
+  tokenB: process.env.TOKEN_B,
+  repoOwner: process.env.REPO_OWNER,
+  repoName: process.env.REPO_NAME,
+  forkOwner: process.env.FORK_OWNER,
+  createIssue: true,
+  enableCodeReview: true,
+});
 
-### Environment Variables
-
-#### Required
-
-| Variable     | Description                       | Example        |
-| ------------ | --------------------------------- | -------------- |
-| `TOKEN_A`    | GitHub token for invited user     | `ghp_xxxxxxxx` |
-| `TOKEN_B`    | GitHub token for repository owner | `ghp_xxxxxxxx` |
-| `REPO_OWNER` | Repository owner username         | `huzgrx`       |
-| `REPO_NAME`  | Repository name                   | `my-project`   |
-| `FORK_OWNER` | Invited user username             | `invited-user` |
-
-#### Optional
-
-| Variable                   | Description              | Default                    | Example          |
-| -------------------------- | ------------------------ | -------------------------- | ---------------- |
-| `BRANCH_NAME`              | Branch to work with      | `jonny`                    | `feature-branch` |
-| `CREATE_ISSUE`             | Enable issue creation    | `false`                    | `true`           |
-| `ISSUE_TYPE`               | Issue type               | `enhancement`              | `feature`        |
-| `ISSUE_TITLE`              | Custom issue title       | `Automated Issue Creation` | `Bug Report`     |
-| `ISSUE_BODY`               | Custom issue description | Generic message            | Custom text      |
-| `ENABLE_CODE_REVIEW`       | Enable code review       | `false`                    | `true`           |
-| `RANDOM_CHANCE_PERCENTAGE` | Probability percentage   | `30`                       | `50`             |
+await bot.run();
+```
 
 ## 🎯 Use Cases
 
 ### Low Activity (10-20%)
 
-```env
-RANDOM_CHANCE_PERCENTAGE=10
+```javascript
+randomChancePercentage: 10;
 ```
 
 Perfect for maintaining minimal activity without being too obvious.
 
 ### Balanced Activity (30-40%)
 
-```env
-RANDOM_CHANCE_PERCENTAGE=30
+```javascript
+randomChancePercentage: 30;
 ```
 
 Default setting for natural, balanced contribution patterns.
 
 ### High Activity (50-70%)
 
-```env
-RANDOM_CHANCE_PERCENTAGE=50
+```javascript
+randomChancePercentage: 50;
 ```
 
 For more frequent contributions and active repository engagement.
 
 ### Maximum Activity (80-100%)
 
-```env
-RANDOM_CHANCE_PERCENTAGE=100
+```javascript
+randomChancePercentage: 100;
 ```
 
 For maximum contribution activity and repository maintenance.
-
-## 📊 How It Works
-
-### 🤖 Enhanced Workflow (v2.0.0)
-
-1. **Issue Creation** (configurable chance): Creates issues with specified details
-2. **PR Creation**: Account A creates pull request from specified branch
-3. **Code Review** (configurable chance): Account A provides detailed review comments
-4. **Approval**: Account B approves the PR (if review was performed)
-5. **Merge**: Account B merges the pull request
-6. **Post-merge**: Account A adds summary comment
-
-### 📈 Contribution Impact
-
-This bot helps increase your GitHub contribution graph by:
-
-1. **Regular Commits**: Automated README updates create regular commit activity
-2. **Pull Requests**: Creates and manages PRs automatically
-3. **Code Reviews**: Performs detailed code reviews (credited to Account A)
-4. **Issue Creation**: Creates issues (counts as issue contributions)
-5. **Repository Activity**: Maintains active repository engagement
 
 ## 🔍 Code Review Features
 
@@ -193,41 +339,76 @@ This bot helps increase your GitHub contribution graph by:
 🎲 Random chance not triggered: Skipping code review
 ```
 
-## 🛠️ Troubleshooting
+## 📈 Benefits
 
-### Common Issues
+### For Developers
 
-1. **Missing Environment Variables**
+- **Automated Workflow**: Reduces manual repository maintenance by 90%
+- **Contribution Enhancement**: Naturally increases GitHub activity
+- **Learning Tool**: Great for understanding GitHub API and automation
+- **Customizable**: Flexible configuration for different needs
 
-   ```
-   ❌ Missing required environment variables. Please check your .env file.
-   ```
+### For Repositories
 
-2. **Invalid Token**
+- **Active Maintenance**: Keeps repositories engaging and active
+- **Quality Reviews**: Automated code review with detailed analysis
+- **Issue Tracking**: Automated issue creation and management
+- **Natural Patterns**: Realistic activity that doesn't look automated
 
-   ```
-   ❌ Repository access validation failed: Bad credentials
-   ```
+### For Teams
 
-3. **Permission Denied**
-   ```
-   ❌ Repository access validation failed: Not Found
-   ```
+- **Collaboration**: Supports multiple account workflows
+- **Role Separation**: Clear separation of responsibilities
+- **Audit Trail**: Detailed logging and activity tracking
+- **Scalable**: Easy to configure for multiple repositories
 
-### Solutions
+## 🛠️ Development
 
-1. **Check your `.env` file** - Ensure all required variables are set
-2. **Verify token permissions** - Make sure tokens have the correct scopes
-3. **Check repository access** - Ensure Account A has been invited to the repository
-4. **Validate usernames** - Double-check REPO_OWNER and FORK_OWNER values
+### Clone and Install
+
+```bash
+git clone https://github.com/yourusername/pull-merge-bot.git
+cd pull-merge-bot
+npm install
+```
+
+### Build
+
+```bash
+npm run build
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+### Test
+
+```bash
+npm test
+```
+
+## 📞 Support
+
+### Documentation
+
+- **README.md**: This file with comprehensive examples
+- **CONFIGURATION.md**: Detailed configuration guide
+- **PROJECT_INDEX.md**: Complete project overview
+- **examples/**: Code examples and usage patterns
+
+### Getting Help
+
+1. **Check the documentation** - README.md and CONFIGURATION.md
+2. **Review examples** - examples/basic-usage.js
+3. **Use CLI help** - `pull-merge-bot --help`
+4. **Open an issue** - GitHub issues for bugs and questions
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## 📄 License
 
@@ -237,16 +418,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Built with [Octokit](https://github.com/octokit/octokit.js) for GitHub API integration
 - Uses [dotenv](https://github.com/motdotla/dotenv) for environment management
+- CLI built with [Commander.js](https://github.com/tj/commander.js)
 - Inspired by the need for automated repository maintenance
-
-## 📞 Support
-
-If you have any questions or need help, please:
-
-1. Check the [Configuration Guide](CONFIGURATION.md)
-2. Review the [troubleshooting section](#troubleshooting)
-3. Open an [issue](https://github.com/huzgrx/pull-merge-bot/issues)
 
 ---
 
 ⭐ **If this project helps you, please give it a star!** ⭐
+
+🔗 **GitHub**: https://github.com/yourusername/pull-merge-bot
+
+📦 **npm**: https://www.npmjs.com/package/pull-merge-bot
