@@ -194,9 +194,7 @@ RANDOM_CHANCE_PERCENTAGE=30`;
     console.log(chalk.blue("   pull-merge-bot run"));
 
     console.log(chalk.blue("\n📚 For more information, visit:"));
-    console.log(
-      chalk.blue("   https://github.com/yourusername/pull-merge-bot")
-    );
+    console.log(chalk.blue("   https://github.com/huzgrx/pull-merge-bot"));
   });
 
 // Handle unknown commands
@@ -226,7 +224,7 @@ Environment Variables:
   See the setup command for more details.
 
 Documentation:
-  https://github.com/yourusername/pull-merge-bot
+  https://github.com/huzgrx/pull-merge-bot
 `
 );
 
